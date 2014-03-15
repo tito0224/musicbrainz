@@ -15,6 +15,10 @@ module MusicBrainz
 			def search(track_name, artist_name)
 				super({recording: track_name, artist: artist_name})
 			end
+
+      def search(album_name, track_name, artist_name)
+        super({album: album_name, recording: track_name, artist: artist_name})
+      end
     end
   end
 end

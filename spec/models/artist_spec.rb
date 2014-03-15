@@ -1,4 +1,4 @@
-# -*- encoding: utf-8 -*-
+# -*- encoding : utf-8 -*-
 
 require "spec_helper"
 
@@ -26,11 +26,16 @@ describe MusicBrainz::Artist do
     and_return({ status: 200, body: response})
         
     matches = MusicBrainz::Artist.search('Chris Martin')
+    matches[2][:score].should == 100
+    matches[2][:id].should == "98d1ec5a-dd97-4c0b-9c83-7928aac89bca"
+    matches[3][:score].should == 100
+    matches[3][:id].should == "af2ab893-3212-4226-9e73-73a1660b6952"
+  end
 
-    matches[0][:score].should == 100
-    matches[0][:id].should == "90fff570-a4ef-4cd4-ba21-e00c7261b05a"
-    matches[1][:score].should == 100
-    matches[1][:id].should == "b732a912-af95-472c-be52-b14610734c64"
+  it "finds name first than alias" do
+    matches = MusicBrainz::Artist.search('Chris Martin')
+    matches.length.should be > 0
+    matches[2][:mbid].should == "98d1ec5a-dd97-4c0b-9c83-7928aac89bca"
   end
 
   it "gets correct result by name" do
